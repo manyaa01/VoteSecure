@@ -22,6 +22,7 @@ def init_db():
                 voter_id   INTEGER PRIMARY KEY,
                 name       TEXT NOT NULL,
                 gender     TEXT NOT NULL,
+                age        INTEGER NOT NULL,
                 zone       TEXT NOT NULL,
                 city       TEXT NOT NULL,
                 password   TEXT NOT NULL,
@@ -93,15 +94,15 @@ def show_result():
         return {row[0]: row[1] for row in c.fetchall()}
 
 
-def taking_data_voter(name, gender, zone, city, passw):
+def taking_data_voter(name, gender, age, zone, city, passw):
     with get_conn() as conn:
         c = conn.cursor()
         c.execute("SELECT MAX(voter_id) FROM voters")
         row = c.fetchone()[0]
         vid = 10001 if row is None else row + 1
         c.execute(
-            "INSERT INTO voters VALUES (?, ?, ?, ?, ?, ?, 0)",
-            (vid, name, gender, zone, city, hash_password(passw))
+            "INSERT INTO voters VALUES (?, ?, ?, ?, ?, ?, ?, 0)",
+            (vid, name, gender, age, zone, city, hash_password(passw))
         )
         conn.commit()
     return vid

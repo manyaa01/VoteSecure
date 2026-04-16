@@ -24,11 +24,12 @@ def migrate():
             c.execute("SELECT 1 FROM voters WHERE voter_id=?", (int(row["voter_id"]),))
             if c.fetchone() is None:
                 c.execute(
-                    "INSERT INTO voters VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO voters VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     (
                         int(row["voter_id"]),
                         row["Name"],
                         row["Gender"],
+                        0,  # age unknown from old CSV, defaulting to 0
                         row["Zone"],
                         row["City"],
                         hash_password(str(row["Passw"])),

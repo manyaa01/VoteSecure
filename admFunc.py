@@ -6,11 +6,9 @@ from ui import PRIMARY, SURFACE, TEXT, build_button_row, build_hero, create_surf
 
 def resetAll(root,frame1):
     from Admin import AdminHome
+    import tkinter.messagebox as mb
     frame3 = root.winfo_children()[1]
-    #df.count_reset()
-    #df.reset_voter_list()
-    #df.reset_cand_list()
-    prepare_root(root, "Reset Status")
+    prepare_root(root, "Reset Election")
     surface = create_surface(frame1)
     build_button_row(
         surface,
@@ -18,10 +16,23 @@ def resetAll(root,frame1):
     )
     build_hero(
         surface,
-        "Reset Disabled",
-        "The reset hooks are commented out in the source, so this view only reports the current safe status.",
+        "Reset Election",
+        "This will reset all vote counts to zero and allow all registered voters to vote again.",
     )
-    set_message(surface, "Reset complete message shown, but no data was changed.", tone="info")
+
+    def confirm_reset():
+        result = mb.askyesno(
+            "Confirm Reset",
+            "Are you sure you want to reset the election?\n\nThis will:\n• Clear all vote counts\n• Allow all voters to vote again\n\nThis action cannot be undone."
+        )
+        if result:
+            df.count_reset()
+            set_message(surface, "Election reset successfully. All votes cleared and voters can vote again.", tone="success")
+
+    build_button_row(
+        surface,
+        [("Reset Election", "Accent.TButton", confirm_reset)],
+    )
 
 def showVotes(root,frame1):
     from Admin import AdminHome

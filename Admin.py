@@ -42,9 +42,9 @@ def AdminHome(root,frame1,frame3):
                 "command": lambda: adFunc.showVotes(root, frame1),
             },
             {
-                "title": "Reset Status",
-                "text": "Review the reset status safely. The underlying destructive reset hooks remain commented out in the existing project.",
-                "button": "View Status",
+                "title": "Reset Election",
+                "text": "Reset all vote counts to zero and allow all voters to cast their ballot again for a fresh election round.",
+                "button": "Reset Election",
                 "command": lambda: adFunc.resetAll(root, frame1),
                 "style": "Accent.TButton",
             },
