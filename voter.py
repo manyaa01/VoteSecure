@@ -2,6 +2,7 @@ import tkinter as tk
 import socket
 from VotingPage import votingPg
 from ui import build_button_row, build_form, build_hero, create_surface, prepare_root, set_message
+from logger import logger
 
 def establish_connection():
     try:
@@ -16,7 +17,7 @@ def establish_connection():
         else:
             return 'Failed'
     except:
-        print("Connection Failed, check if server is running...")
+        logger.error("Connection to server failed — server may not be running")
         return 'Failed'
 
 

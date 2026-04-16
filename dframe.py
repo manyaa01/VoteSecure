@@ -1,6 +1,7 @@
 import sqlite3
 import hashlib
 from pathlib import Path
+from logger import logger
 
 DB_PATH = Path("database") / "votesecure.db"
 
@@ -71,17 +72,19 @@ def isEligible(vid):
 
 
 def vote_update(sign, vid):
-    if not isEligible(vid):
-        return False
     with get_conn() as conn:
         c = conn.cursor()
+        # Atomically mark voter as voted only if they haven't yet
+        c.execute(
+            "UPDATE voters SET has_voted=1 WHERE voter_id=? AND has_voted=0",
+            (vid,)
+        )
+        if c.rowcount == 0:
+            # Either voter doesn't exist or already voted
+            return False
         c.execute(
             "UPDATE candidates SET vote_count = vote_count + 1 WHERE sign=?",
             (sign,)
-        )
-        c.execute(
-            "UPDATE voters SET has_voted=1 WHERE voter_id=?",
-            (vid,)
         )
         conn.commit()
     return True
@@ -105,6 +108,7 @@ def taking_data_voter(name, gender, age, zone, city, passw):
             (vid, name, gender, age, zone, city, hash_password(passw))
         )
         conn.commit()
+    logger.info(f"New voter registered — ID: {vid}, Name: {name}")
     return vid
 
 
@@ -114,6 +118,7 @@ def count_reset():
         c.execute("UPDATE voters SET has_voted=0")
         c.execute("UPDATE candidates SET vote_count=0")
         conn.commit()
+    logger.info("Election reset — all votes cleared, all voters re-enabled")
 
 
 def reset_voter_list():

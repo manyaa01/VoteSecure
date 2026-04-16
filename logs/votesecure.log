@@ -1,0 +1,14 @@
+2026-04-16 23:20:46  INFO      Server started — listening on Manyaa:4001
+2026-04-16 23:20:55  INFO      New connection from ('192.168.29.200', 60437)
+2026-04-16 23:21:03  INFO      Voter authenticated — ID: 10001
+2026-04-16 23:21:08  INFO      Vote received from ID: 10001
+2026-04-16 23:21:08  INFO      Vote cast successfully — ID: 10001, choice: nota
+2026-04-16 23:21:12  INFO      New connection from ('192.168.29.200', 49679)
+2026-04-16 23:21:20  WARNING   Vote already cast — ID: 10001
+2026-04-16 23:21:20  INFO      Vote received from ID: 10001
+2026-04-16 23:21:20  ERROR     Vote update failed — ID: 10001
+2026-04-17 01:25:43  INFO      Election reset — all votes cleared, all voters re-enabled
+2026-04-17 01:25:49  INFO      New connection from ('192.168.29.200', 58141)
+2026-04-17 01:25:59  INFO      Voter authenticated — ID: 10001
+2026-04-17 01:26:04  INFO      Vote received from ID: 10001
+2026-04-17 01:26:04  INFO      Vote cast successfully — ID: 10001, choice: nota
